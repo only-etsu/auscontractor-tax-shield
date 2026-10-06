@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AusContractor Tax Shield | FY2026–2027 Sole Trader & Contractor Tax Calculator</title>
+  <meta name="description" content="Free, instant Australian contractor & sole trader tax calculator for FY2026-2027. Calculate exact take-home pay, ATO income tax reserve, 12% superannuation, GST, and HECS repayments.">
+  <meta name="keywords" content="sole trader tax calculator australia, contractor take home pay calculator, abn tax calculator 2026 2027, stage 3 tax cuts sole trader, gst invoice reserve calculator">
+  <link rel="canonical" href="https://auscontractortax.com.au/">
+  
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AusContractor Tax Shield | Free Australian Sole Trader Tax Calculator">
+  <meta property="og:description" content="Calculate exactly how much to reserve from every invoice for ATO tax, Medicare, GST, and 12% superannuation for FY2026-2027.">
+  
+  <!-- Structured Data (JSON-LD) for Google Rich Snippets -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "AusContractor Tax Shield",
+    "operatingSystem": "All",
+    "applicationCategory": "BusinessApplication",
+    "description": "Australian contractor and sole trader tax calculator and invoice reserve planner updated for FY2026-2027.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "AUD"
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --tax-color: #ef4444;
+      --super-color: #f59e0b;
+      --gst-color: #6366f1;
+      --net-color: #10b981;
+      --expense-color: #64748b;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      line-height: 1.5;
+      padding: 24px 16px;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 8px;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .grid {
+        grid-template-columns: 1.15fr 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .card h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+    }
+
+    .hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-prefix {
+      position: absolute;
+      left: 14px;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 1rem;
+      pointer-events: none;
+    }
+
+    input[type="number"], select {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 10px 14px 10px 32px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    select {
+      padding-left: 14px;
+      cursor: pointer;
+    }
+
+    input[type="number"]:focus, select:focus {
+      border-color: var(--accent);
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .toggle-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #e2e8f0;
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #334155;
+      transition: .3s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--accent);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    /* Results Card */
+    .highlight-banner {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(99, 102, 241, 0.15));
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .highlight-label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #34d399;
+      letter-spacing: 0.05em;
+    }
+
+    .highlight-value {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 4px 0;
+    }
+
+    .highlight-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Breakdown Bar */
+    .bar-container {
+      height: 14px;
+      border-radius: 9999px;
+      overflow: hidden;
+      display: flex;
+      background: #0f172a;
+      margin: 16px 0 24px 0;
+    }
+
+    .bar-segment {
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    .table-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.95rem;
+    }
+
+    .data-row.total-row {
+      font-weight: 700;
+      border-top: 1px solid var(--card-border);
+      border-bottom: none;
+      padding-top: 12px;
+      font-size: 1.05rem;
+    }
+
+    .data-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+
+    .rule-of-thumb {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .rule-of-thumb svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .rule-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fbbf24;
+      margin-bottom: 2px;
+    }
+
+    .rule-desc {
+      font-size: 0.85rem;
+      color: #fde68a;
+    }
+
+    /* Action Buttons */
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+      border: none;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0f172a;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-secondary {
+      background: #334155;
+      color: #fff;
+    }
+
+    .btn-secondary:hover {
+      background: #475569;
+    }
+
+    /* Monetization / Recommended Tools Section */
+    .recommendations-section {
+      margin-top: 40px;
+    }
+
+    .recommendations-section h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      text-align: center;
+      color: #cbd5e1;
+    }
+
+    .rec-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .rec-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 16px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .rec-card:hover {
+      border-color: #64748b;
+      transform: translateY(-2px);
+    }
+
+    .rec-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: 4px;
+    }
+
+    .rec-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .rec-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .rec-link {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #38bdf8;
+      text-decoration: none;
+    }
+
+    .rec-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background: #fff;
+        color: #000;
+        padding: 0;
+      }
+      .card, .highlight-banner {
+        background: #fff;
+        border: 1px solid #ccc;
+        box-shadow: none;
+        color: #000;
+      }
+      .badge, .button-group, .recommendations-section, .form-group input, .form-group select, .toggle-row {
+        display: none !important;
+      }
+      .highlight-value, .highlight-label, .rule-title, .rule-desc {
+        color: #000 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <span class="badge">ATO FY2026–2027 Legislated Rates (Stage 3)</span>
+      <h1>AusContractor Tax Shield</h1>
+      <p class="subtitle">Real-time take-home pay, 12% superannuation, GST, and ATO tax reserve estimator for Australian sole traders and ABN subcontractors.</p>
+    </header>
+
+    <div class="grid">
+      <!-- Input Controls -->
+      <div class="card">
+        <h2>
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          Billing & Income Inputs
+        </h2>
+
+        <div class="form-group">
+          <label for="calcMode">Calculation Basis</label>
+          <select id="calcMode" onchange="handleModeChange()">
+            <option value="annual">Target Annual Invoiced Gross ($)</option>
+            <option value="single_invoice">Single Invoice Reserve ($)</option>
+            <option value="hourly">Hourly Billing Rate ($/hr)</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="inputWrapperMain">
+          <label for="mainIncomeInput" id="mainInputLabel">Annual Gross Invoiced (ex. GST)</label>
+          <div class="input-wrapper">
+            <span class="input-prefix">$</span>
+            <input type="number" id="mainIncomeInput" value="100000" min="0" step="1000" oninput="calculate()">
+          </div>
+          <p class="hint" id="mainInputHint">Total amount you bill your clients over the 2026–27 financial year.</p>
+        </div>
+
+        <div class="form-group" id="hoursPerWeekGroup" style="display: none;">
+          <label for="hoursPerWeek">Billable Hours / Week (48 weeks/yr)</label>
+          <div class="input-wrapper">
+            <input type="number" id="hoursPerWeek" value="38" min="1" max="100" style="padding-left:14px;" oninput="calculate()">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="expensesInput">Tax Deductible Business Expenses ($/yr)</label>
+          <div class="input-wrapper">
+            <span class="input-prefix">$</span>
+            <input type="number" id="expensesInput" value="8000" min="0" step="500" oninput="calculate()">
+          </div>
+          <p class="hint">Tools, software, travel, phone, insurance, home office deductions.</p>
+        </div>
+
+        <!-- Toggles -->
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-label">Registered for GST (10%)</div>
+            <div class="hint">Mandatory if gross turnover is $75,000+</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="gstToggle" checked onchange="calculate()">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-label">Pay Yourself Super (12.0%)</div>
+            <div class="hint">Legislated 12% SG rate for FY26-27 (Tax deductible)</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="superToggle" checked onchange="calculate()">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-label">HECS / HELP Student Loan Debt</div>
+            <div class="hint">Includes ATO indexed income repayment rates</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="hecsToggle" onchange="calculate()">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Output / Results -->
+      <div class="card">
+        <h2>
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+          Where Every Dollar Goes
+        </h2>
+
+        <div class="highlight-banner">
+          <div class="highlight-label">Net In-Pocket Take Home</div>
+          <div class="highlight-value" id="displayTakeHome">$0</div>
+          <div class="highlight-sub" id="displayTakeHomeSub">Safe to transfer to your personal everyday account</div>
+        </div>
+
+        <!-- Proportional Color Bar -->
+        <div class="bar-container">
+          <div class="bar-segment" id="barNet" style="background-color: var(--net-color); width: 60%;" title="Take Home"></div>
+          <div class="bar-segment" id="barTax" style="background-color: var(--tax-color); width: 20%;" title="Income Tax + Medicare"></div>
+          <div class="bar-segment" id="barSuper" style="background-color: var(--super-color); width: 10%;" title="Superannuation"></div>
+          <div class="bar-segment" id="barExpense" style="background-color: var(--expense-color); width: 10%;" title="Expenses"></div>
+        </div>
+
+        <!-- Breakdown Table -->
+        <div class="table-rows">
+          <div class="data-row">
+            <span><span class="data-dot" style="background: #fff;"></span>Gross Invoiced (ex GST)</span>
+            <strong id="displayGross">$0</strong>
+          </div>
+          <div class="data-row" id="rowGst">
+            <span><span class="data-dot" style="background: var(--gst-color);"></span>GST Collected (10% to ATO)</span>
+            <span id="displayGst" style="color: #a5b4fc;">$0</span>
+          </div>
+          <div class="data-row">
+            <span><span class="data-dot" style="background: var(--expense-color);"></span>Business Expenses (Deductions)</span>
+            <span id="displayExpenses" style="color: #94a3b8;">-$0</span>
+          </div>
+          <div class="data-row">
+            <span><span class="data-dot" style="background: var(--super-color);"></span>Superannuation Fund (12.0%)</span>
+            <span id="displaySuper" style="color: #fcd34d;">-$0</span>
+          </div>
+          <div class="data-row">
+            <span><span class="data-dot" style="background: var(--tax-color);"></span>ATO Income Tax (Stage 3 Rates)</span>
+            <span id="displayTax" style="color: #fca5a5;">-$0</span>
+          </div>
+          <div class="data-row">
+            <span><span class="data-dot" style="background: #f87171;"></span>Medicare Levy (2.0%)</span>
+            <span id="displayMedicare" style="color: #fca5a5;">-$0</span>
+          </div>
+          <div class="data-row" id="rowHecs" style="display: none;">
+            <span><span class="data-dot" style="background: #e879f9;"></span>HECS / HELP Repayment</span>
+            <span id="displayHecs" style="color: #f0abfc;">-$0</span>
+          </div>
+          <div class="data-row total-row">
+            <span>Effective Tax & Obligations Rate</span>
+            <span id="displayEffectiveRate" style="color: #38bdf8;">0%</span>
+          </div>
+        </div>
+
+        <!-- Rule of Thumb Callout -->
+        <div class="rule-of-thumb">
+          <svg width="24" height="24" fill="none" stroke="#fbbf24" stroke-width="2" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <div>
+            <div class="rule-title" id="ruleTitle">The Clean Split Strategy</div>
+            <div class="rule-desc" id="ruleDesc">Set aside <strong>30%</strong> of every invoice directly into a dedicated Tax Savings account before touching personal funds.</div>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button class="btn btn-secondary" onclick="window.print()">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+            Print / PDF Summary
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Affiliate / Essential Infrastructure (Monetization Engine) -->
+    <div class="recommendations-section">
+      <h3>Essential Australian Sole Trader Toolkit</h3>
+      <div class="rec-grid">
+        <div class="rec-card">
+          <div class="rec-tag">High-Yield Buffer Account</div>
+          <div class="rec-title">Macquarie / Up Business Savings</div>
+          <div class="rec-desc">Keep your 30% ATO tax & GST reserve earning ~4.5%+ interest with zero monthly account fees and automatic sub-account splits.</div>
+          <a href="https://www.macquarie.com.au/business-banking/business-accounts.html" target="_blank" rel="noopener noreferrer" class="rec-link">Compare Accounts &rarr;</a>
+        </div>
+
+        <div class="rec-card">
+          <div class="rec-tag">All-in-One Tax Automation</div>
+          <div class="rec-title">Hnry / Rounded for Contractors</div>
+          <div class="rec-desc">Automatically calculates and pays your exact tax, GST, and super whenever an invoice is paid so you never face a tax bill shock.</div>
+          <a href="https://hnry.com.au" target="_blank" rel="noopener noreferrer" class="rec-link">Explore Hnry &rarr;</a>
+        </div>
+
+        <div class="rec-card">
+          <div class="rec-tag">Superannuation</div>
+          <div class="rec-title">AustralianSuper / Hostplus</div>
+          <div class="rec-desc">Claim your 12% voluntary super contributions as a direct personal tax deduction up to the $30,000 annual concessional cap.</div>
+          <a href="https://www.australiansuper.com" target="_blank" rel="noopener noreferrer" class="rec-link">Check Concessional Caps &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function handleModeChange() {
+      const mode = document.getElementById('calcMode').value;
+      const label = document.getElementById('mainInputLabel');
+      const hint = document.getElementById('mainInputHint');
+      const input = document.getElementById('mainIncomeInput');
+      const hoursGroup = document.getElementById('hoursPerWeekGroup');
+
+      if (mode === 'annual') {
+        label.innerText = 'Annual Gross Invoiced (ex. GST)';
+        hint.innerText = 'Total amount you bill your clients over the 2026–27 financial year.';
+        input.value = '100000';
+        input.step = '1000';
+        hoursGroup.style.display = 'none';
+      } else if (mode === 'single_invoice') {
+        label.innerText = 'Single Invoice Amount (ex. GST)';
+        hint.innerText = 'Enter the value of an upcoming invoice to see exact withholdings.';
+        input.value = '5000';
+        input.step = '100';
+        hoursGroup.style.display = 'none';
+      } else if (mode === 'hourly') {
+        label.innerText = 'Hourly Billable Rate ($/hr)';
+        hint.innerText = 'Your rate charged per billable hour to clients.';
+        input.value = '85';
+        input.step = '5';
+        hoursGroup.style.display = 'block';
+      }
+      calculate();
+    }
+
+    function calculateStage3Tax(taxableIncome) {
+      if (taxableIncome <= 18200) return 0;
+      if (taxableIncome <= 45000) return (taxableIncome - 18200) * 0.16;
+      if (taxableIncome <= 135000) return 4288 + (taxableIncome - 45000) * 0.30;
+      if (taxableIncome <= 190000) return 31288 + (taxableIncome - 135000) * 0.37;
+      return 51638 + (taxableIncome - 190000) * 0.45;
+    }
+
+    function calculateLITO(taxableIncome) {
+      if (taxableIncome <= 37500) return 700;
+      if (taxableIncome <= 45000) return Math.max(0, 700 - (taxableIncome - 37500) * 0.05);
+      if (taxableIncome <= 66667) return Math.max(0, 325 - (taxableIncome - 45000) * 0.015);
+      return 0;
+    }
+
+    function calculateMedicare(taxableIncome) {
+      if (taxableIncome <= 26000) return 0;
+      if (taxableIncome <= 32500) return (taxableIncome - 26000) * 0.10;
+      return taxableIncome * 0.02;
+    }
+
+    function calculateHECS(repaymentIncome) {
+      // 2026-27 Repayment Thresholds approx
+      if (repaymentIncome < 54435) return 0;
+      if (repaymentIncome <= 62850) return repaymentIncome * 0.01;
+      if (repaymentIncome <= 66620) return repaymentIncome * 0.02;
+      if (repaymentIncome <= 70618) return repaymentIncome * 0.025;
+      if (repaymentIncome <= 74855) return repaymentIncome * 0.03;
+      if (repaymentIncome <= 79346) return repaymentIncome * 0.035;
+      if (repaymentIncome <= 84107) return repaymentIncome * 0.04;
+      if (repaymentIncome <= 89154) return repaymentIncome * 0.045;
+      if (repaymentIncome <= 94503) return repaymentIncome * 0.05;
+      if (repaymentIncome <= 100174) return repaymentIncome * 0.055;
+      if (repaymentIncome <= 106185) return repaymentIncome * 0.06;
+      if (repaymentIncome <= 112556) return repaymentIncome * 0.065;
+      if (repaymentIncome <= 119309) return repaymentIncome * 0.07;
+      if (repaymentIncome <= 126467) return repaymentIncome * 0.075;
+      if (repaymentIncome <= 134056) return repaymentIncome * 0.08;
+      if (repaymentIncome <= 142100) return repaymentIncome * 0.085;
+      if (repaymentIncome <= 150626) return repaymentIncome * 0.09;
+      if (repaymentIncome <= 159663) return repaymentIncome * 0.095;
+      return repaymentIncome * 0.10;
+    }
+
+    function formatAUD(amount) {
+      return '$' + Math.round(amount).toLocaleString('en-AU');
+    }
+
+    function calculate() {
+      const mode = document.getElementById('calcMode').value;
+      const rawInput = parseFloat(document.getElementById('mainIncomeInput').value) || 0;
+      const expensesRaw = parseFloat(document.getElementById('expensesInput').value) || 0;
+      const gstRegistered = document.getElementById('gstToggle').checked;
+      const paySuper = document.getElementById('superToggle').checked;
+      const hasHecs = document.getElementById('hecsToggle').checked;
+
+      let annualGross = 0;
+      let displayMultiplier = 1;
+
+      if (mode === 'annual') {
+        annualGross = rawInput;
+        displayMultiplier = 1;
+      } else if (mode === 'single_invoice') {
+        // Assume this invoice represents a proportional sample of an annual $100k run rate to find realistic tax bracket
+        annualGross = rawInput * 12; // annualized proxy for tax bracket
+        displayMultiplier = rawInput / (annualGross || 1);
+      } else if (mode === 'hourly') {
+        const hours = parseFloat(document.getElementById('hoursPerWeek').value) || 38;
+        annualGross = rawInput * hours * 48; // 48 working weeks
+        displayMultiplier = 1;
+      }
+
+      // Business expenses
+      const annualExpenses = Math.min(expensesRaw, annualGross);
+      const grossProfit = Math.max(0, annualGross - annualExpenses);
+
+      // Superannuation (12% SG) - deductible against income tax up to $30,000 cap
+      let annualSuper = 0;
+      if (paySuper) {
+        annualSuper = Math.min(30000, grossProfit * 0.12);
+      }
+
+      // Taxable income = Gross - Expenses - Concessional Super
+      const taxableIncome = Math.max(0, grossProfit - annualSuper);
+
+      // Tax calculations
+      const rawTax = calculateStage3Tax(taxableIncome);
+      const lito = calculateLITO(taxableIncome);
+      const annualIncomeTax = Math.max(0, rawTax - lito);
+      const annualMedicare = calculateMedicare(taxableIncome);
+      
+      let annualHecs = 0;
+      if (hasHecs) {
+        annualHecs = calculateHECS(taxableIncome);
+      }
+
+      // GST (10% on top of invoice, or 1/11th if inclusive)
+      const annualGST = gstRegistered ? annualGross * 0.10 : 0;
+
+      // Net Take Home = Annual Gross - Expenses - Super - Income Tax - Medicare - HECS
+      const annualTakeHome = annualGross - annualExpenses - annualSuper - annualIncomeTax - annualMedicare - annualHecs;
+
+      // Adjust for Single Invoice display mode
+      const viewGross = mode === 'single_invoice' ? rawInput : annualGross;
+      const viewGST = mode === 'single_invoice' ? (gstRegistered ? rawInput * 0.10 : 0) : annualGST;
+      const viewExpenses = mode === 'single_invoice' ? annualExpenses * displayMultiplier : annualExpenses;
+      const viewSuper = mode === 'single_invoice' ? annualSuper * displayMultiplier : annualSuper;
+      const viewTax = mode === 'single_invoice' ? annualIncomeTax * displayMultiplier : annualIncomeTax;
+      const viewMedicare = mode === 'single_invoice' ? annualMedicare * displayMultiplier : annualMedicare;
+      const viewHecs = mode === 'single_invoice' ? annualHecs * displayMultiplier : annualHecs;
+      const viewTakeHome = mode === 'single_invoice' ? annualTakeHome * displayMultiplier : annualTakeHome;
+
+      // Total withholdings (Tax + Medicare + Hecs + Super)
+      const totalReserveAmount = viewTax + viewMedicare + viewHecs + viewSuper + (gstRegistered ? viewGST : 0);
+      const totalCustomerPays = viewGross + (gstRegistered ? viewGST : 0);
+      const reservePercentage = totalCustomerPays > 0 ? (totalReserveAmount / totalCustomerPays) * 100 : 0;
+
+      // Update UI
+      document.getElementById('displayTakeHome').innerText = formatAUD(viewTakeHome);
+      document.getElementById('displayGross').innerText = formatAUD(viewGross);
+      
+      const rowGst = document.getElementById('rowGst');
+      if (gstRegistered) {
+        rowGst.style.display = 'flex';
+        document.getElementById('displayGst').innerText = '+' + formatAUD(viewGST);
+      } else {
+        rowGst.style.display = 'none';
+      }
+
+      document.getElementById('displayExpenses').innerText = '-' + formatAUD(viewExpenses);
+      document.getElementById('displaySuper').innerText = '-' + formatAUD(viewSuper);
+      document.getElementById('displayTax').innerText = '-' + formatAUD(viewTax);
+      document.getElementById('displayMedicare').innerText = '-' + formatAUD(viewMedicare);
+
+      const rowHecs = document.getElementById('rowHecs');
+      if (hasHecs) {
+        rowHecs.style.display = 'flex';
+        document.getElementById('displayHecs').innerText = '-' + formatAUD(viewHecs);
+      } else {
+        rowHecs.style.display = 'none';
+      }
+
+      const effectiveRate = viewGross > 0 ? ((viewTax + viewMedicare + viewHecs) / viewGross) * 100 : 0;
+      document.getElementById('displayEffectiveRate').innerText = effectiveRate.toFixed(1) + '% (Income Tax + Med)';
+
+      // Update Proportional Visualizer Bar
+      const totalVisual = viewTakeHome + viewTax + viewMedicare + viewSuper + viewExpenses;
+      if (totalVisual > 0) {
+        document.getElementById('barNet').style.width = ((viewTakeHome / totalVisual) * 100) + '%';
+        document.getElementById('barTax').style.width = (((viewTax + viewMedicare + viewHecs) / totalVisual) * 100) + '%';
+        document.getElementById('barSuper').style.width = ((viewSuper / totalVisual) * 100) + '%';
+        document.getElementById('barExpense').style.width = ((viewExpenses / totalVisual) * 100) + '%';
+      }
+
+      // Update Rule of Thumb
+      const roundedReserve = Math.ceil(reservePercentage / 5) * 5;
+      document.getElementById('ruleTitle').innerText = `Set Aside ${roundedReserve}% Of Every Invoice`;
+      document.getElementById('ruleDesc').innerHTML = `Whenever an invoice is paid, instantly transfer <strong>${roundedReserve}%</strong> (${formatAUD(totalReserveAmount)}) into your dedicated Tax & Super sub-account. The remaining <strong>${formatAUD(viewTakeHome)}</strong> is 100% safe to spend.`;
+    }
+
+    // Initialize on page load
+    window.onload = function() {
+      calculate();
+    };
+  </script>
+</body>
+</html>
